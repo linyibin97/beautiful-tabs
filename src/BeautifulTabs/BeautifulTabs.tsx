@@ -22,13 +22,17 @@ function BeautifulTabs({ list, tabWidth = "6rem" }: BeautifulTabsProps) {
   const foldWidth = 0.1 * _tabWidth;
   const maxFoldNum = 4;
 
-  const handleWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
-    const newOffset = Math.max(
-      0,
-      Math.min(offset + e.deltaX, totalWidth - containerWidth)
-    );
-    setOffset(newOffset);
-  };
+  const handleWheel: React.WheelEventHandler<HTMLDivElement> = mergeWheelEvents(
+    (e, deltaX, deltaY) => {
+      const delta = deltaX || deltaY;
+      console.log(delta);
+      const newOffset = Math.max(
+        0,
+        Math.min(offset + delta, totalWidth - containerWidth)
+      );
+      setOffset(newOffset);
+    }
+  );
 
   const tabStyle = useMemo<React.CSSProperties[]>(() => {
     const beforeEndIndex = Math.floor(offset / _tabWidth);
@@ -47,20 +51,17 @@ function BeautifulTabs({ list, tabWidth = "6rem" }: BeautifulTabsProps) {
         return {
           left: -foldWidth,
           width: foldWidth,
-          color: "#fff",
         };
       }
       if (index > afterStartIndex) {
         return {
           left: containerWidth,
           width: foldWidth,
-          color: "#fff",
         };
       }
       return {
         width: _tabWidth,
         left: index * _tabWidth - offset,
-        color: "#fff",
       };
     });
 
@@ -77,7 +78,6 @@ function BeautifulTabs({ list, tabWidth = "6rem" }: BeautifulTabsProps) {
         ...res[i],
         left,
         width,
-        color: "red",
       };
 
       left += width;
@@ -99,7 +99,6 @@ function BeautifulTabs({ list, tabWidth = "6rem" }: BeautifulTabsProps) {
         ...res[i],
         left: containerWidth - right - width,
         width,
-        color: "red",
       };
 
       right += width;
@@ -139,6 +138,33 @@ function BeautifulTabs({ list, tabWidth = "6rem" }: BeautifulTabsProps) {
       })}
     </div>
   );
+}
+
+function mergeWheelEvents(
+  handleWheelEvent: (
+    event: React.WheelEvent<HTMLDivElement>,
+    deltaX: number,
+    deltaY: number
+  ) => void
+): React.WheelEventHandler<HTMLDivElement> {
+  let rafId: number | null = null;
+  let sumDeltaX = 0;
+  let sumDeltaY = 0;
+
+  return (event: React.WheelEvent<HTMLDivElement>) => {
+    const wheelEvent = event;
+    sumDeltaX += wheelEvent.deltaX;
+    sumDeltaY += wheelEvent.deltaY;
+
+    if (!rafId) {
+      rafId = requestAnimationFrame(() => {
+        handleWheelEvent(wheelEvent, sumDeltaX, sumDeltaY);
+        sumDeltaX = 0;
+        sumDeltaY = 0;
+        rafId = null;
+      });
+    }
+  };
 }
 
 export default BeautifulTabs;
