@@ -11,8 +11,24 @@ function App() {
         alignItems: "center",
       }}
     >
-      <BeautifulTabs 
-        list={['tab1', 'tab2', 'tab3']}
+      <BeautifulTabs
+        list={[
+          "tab1",
+          "tab2",
+          "tab3",
+          "tabtabtab4",
+          "tabtabtabtab5",
+          "tab1",
+          "tab2",
+          "tab3",
+          "tabtabtab4",
+          "tabtabtabtab5",
+          "tab1",
+          "tab2",
+          "tab3",
+          "tabtabtab4",
+          "tabtabtabtab5",
+        ]}
       />
     </div>
   );
