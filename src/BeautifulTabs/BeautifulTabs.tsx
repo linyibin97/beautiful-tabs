@@ -25,7 +25,6 @@ function BeautifulTabs({ list, tabWidth = "6rem" }: BeautifulTabsProps) {
   const handleWheel: React.WheelEventHandler<HTMLDivElement> = mergeWheelEvents(
     (e, deltaX, deltaY) => {
       const delta = deltaX || deltaY;
-      console.log(delta);
       const newOffset = Math.max(
         0,
         Math.min(offset + delta, totalWidth - containerWidth)
@@ -106,6 +105,14 @@ function BeautifulTabs({ list, tabWidth = "6rem" }: BeautifulTabsProps) {
 
     return res;
   }, [_tabWidth, containerWidth, foldWidth, list, offset, totalWidth]);
+
+  useEffect(() => {
+    if (offset + containerWidth > totalWidth || offset < 0) {
+      setOffset(Math.max(0, totalWidth - containerWidth));
+    }
+  }, [totalWidth, containerWidth]);
+
+  console.log(offset);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
