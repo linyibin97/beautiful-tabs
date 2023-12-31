@@ -1,5 +1,9 @@
 import BeautifulTabs from "./BeautifulTabs/BeautifulTabs";
 
+const list = new Array(~~(100 * Math.random()))
+  .fill(null)
+  .map((_, index) => `${index}_` + "tab".repeat(~~(Math.random() * 5) + 1));
+
 function App() {
   return (
     <div
@@ -11,55 +15,7 @@ function App() {
         alignItems: "center",
       }}
     >
-      <BeautifulTabs
-        list={[
-          "tab1",
-          "tab2",
-          "tab3",
-          "tabtabtab4",
-          "tabtabtabtab5",
-          "tab1",
-          "tab2",
-          "tab3",
-          "tabtabtab4",
-          "tabtabtabtab5",
-          "tab1",
-          "tab2",
-          // "tab3",
-          // "tabtabtab4",
-          // "tabtabtabtab5",
-          // "tab1",
-          // "tab2",
-          // "tab3",
-          // "tabtabtab4",
-          // "tabtabtabtab5",
-          // "tab1",
-          // "tab2",
-          // "tab3",
-          // "tabtabtab4",
-          // "tabtabtabtab5",
-          // "tab1",
-          // "tab2",
-          // "tab3",
-          // "tabtabtab4",
-          // "tabtabtabtab5",
-          // "tab1",
-          // "tab2",
-          // "tab3",
-          // "tabtabtab4",
-          // "tabtabtabtab5",
-          // "tab1",
-          // "tab2",
-          // "tab3",
-          // "tabtabtab4",
-          // "tabtabtabtab5",
-          // "tab1",
-          // "tab2",
-          // "tab3",
-          // "tabtabtab4",
-          // "tabtabtabtab5",
-        ]}
-      />
+      <BeautifulTabs list={list} />
     </div>
   );
 }

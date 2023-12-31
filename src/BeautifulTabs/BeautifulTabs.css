@@ -11,10 +11,16 @@
   overflow: hidden;
   display: inline-block;
   box-sizing: border-box;
-  border: 1px solid grey;
+  /* border: 1px solid grey; */
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
   background-color: #2a2a2a;
   padding: 6px;
   height: 100%;
   position: absolute;
   transition: all 0.1s;
+}
+
+.tabs__curr {
+  background-color: #333;
 }
