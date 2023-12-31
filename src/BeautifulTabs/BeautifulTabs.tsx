@@ -34,6 +34,7 @@ function BeautifulTabs({
 
     const afterEndIndex =
       list.length -
+      1 -
       Math.floor((totalWidth - containerWidth - offset) / _tabWidth);
     const afterStartIndex = Math.min(
       afterEndIndex + maxFoldNum,
@@ -113,8 +114,6 @@ function BeautifulTabs({
   );
 
   const handleClickTab = (item: string, index: number) => {
-    console.log("click", item, index);
-    console.log(index * _tabWidth - offset, (index + 1) * _tabWidth - offset);
     setCurrIndex(index);
 
     if (index * _tabWidth - offset < 0) {
@@ -132,8 +131,6 @@ function BeautifulTabs({
       setOffsetSafely(offset);
     }
   }, [totalWidth, containerWidth]);
-
-  console.log(offset);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
